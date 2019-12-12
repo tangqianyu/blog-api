@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Inject, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Inject, Param, Post, Put, UseGuards, HttpCode } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
 import { Roles } from '../../common/decorators/roles.decorator';
@@ -21,6 +21,7 @@ export class UserController {
      * 其中 Authorization 是用于告诉服务端本次请求有令牌，并且令牌前缀是 Bearer，而令牌的具体内容是登录之后返回的 data(accessToken)。
      */
     @Post('login')
+    @HttpCode(200)
     async login(@Body() body: { account: string, password: string }): Promise<Result> {
         await this.userService.login(body.account, body.password);
         const accessToken = await this.authService.createToken({ account: body.account });

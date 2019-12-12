@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Inject, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Inject, Param, Post, Put, Req, UseGuards, HttpCode } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 
@@ -15,6 +15,7 @@ export class PostController {
     ) { }
 
     @Post()
+    @HttpCode(200)
     @UseGuards(AuthGuard())
     async createPost(@Req() req: Request, @Body() createInput: PostEntity): Promise<Result> {
         createInput.user = req.user;
