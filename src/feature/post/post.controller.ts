@@ -54,6 +54,7 @@ export class PostController {
   async findAll(@Req() req: Request): Promise<Result> {
     /* 管理系统用 */
     const data = await this.postService.findAll(req.user.id);
+    data.map(item => item.tags = JSON.parse(`${item.tags}`))
     return { code: 200, message: '查询所有帖子成功', data };
   }
 
